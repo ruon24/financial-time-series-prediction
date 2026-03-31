@@ -1,9 +1,9 @@
 # financial-time-series-prediction```markdown
 
-## 2. Overview
+## 1. Overview
 This project explores the application of machine learning models to predict daily log returns of a stock (Apple - AAPL) for potential use in algorithmic trading strategies. Financial markets are notoriously complex and efficient, making accurate predictions a significant challenge. This notebook demonstrates a typical workflow, from data acquisition and feature engineering to model training, evaluation, and hyperparameter tuning, providing insights into the inherent difficulties of forecasting financial time series.
 
-## 3. Dataset Description
+## 2. Dataset Description
 
 **Data Source:** Historical daily stock data for Apple (AAPL) acquired using the `yfinance` library.
 **Timeframe:** From January 1, 2020, up to the most recent available date.
@@ -24,7 +24,7 @@ This project explores the application of machine learning models to predict dail
 
 **Data Cleaning:** Rows containing `NaN` values (primarily due to the calculation of `log_return` and lagged features) were dropped, ensuring a clean dataset for modeling.
 
-## 4. Methodology
+## 3. Methodology
 
 ### Data Preprocessing
 1.  **Data Acquisition:** Downloaded historical daily stock data for AAPL using `yfinance`.
@@ -41,7 +41,7 @@ To maintain the temporal order of time series data, a chronological split was pe
 *   **Training Set:** The first 80% of the data was used for training the models.
 *   **Test Set:** The remaining 20% of the data was reserved for evaluating model performance on unseen, future data.
 
-## 5. Models Used
+## 4. Models Used
 
 ### Baselines
 1.  **Zero Baseline:** Predicts a log return of 0 for all future periods. This serves as a simple benchmark for models predicting near-zero returns.
@@ -79,13 +79,13 @@ To maintain the temporal order of time series data, a chronological split was pe
         *   R2: `-0.06220741399571006`
         *   Direction Accuracy: `52.88461538461539%`
 
-## 6. Evaluation Metrics
+## 5. Evaluation Metrics
 
 1.  **Mean Squared Error (MSE):** Measures the average squared difference between the estimated values and the actual value. Lower is better.
 2.  **R-squared (R²):** Represents the proportion of the variance in the dependent variable that is predictable from the independent variables. A higher R² indicates a better fit, but a very low R² (or even negative) is common in financial prediction due to high noise.
 3.  **Directional Accuracy:** Crucial in finance, this metric calculates the proportion of times the model correctly predicts the *direction* (up or down) of the stock's movement, irrespective of the magnitude. A value above 0.5 (50%) indicates some predictive power over random chance.
 
-## 7. Results & Key Findings
+## 6. Results & Key Findings
 
 ### Comparison between Models
 | Model                  | MSE           | R²            | Direction Accuracy |
@@ -110,19 +110,19 @@ To maintain the temporal order of time series data, a chronological split was pe
 ### Discussion of Weak Signal in Financial Data
 The results underscore a critical aspect of financial market prediction: the signal-to-noise ratio is extremely low. Even sophisticated machine learning models struggle to find strong, consistent predictive patterns due to market efficiency and the randomness inherent in price movements. While a directional accuracy above 50% is promising for strategy development, it also highlights that the predictive edge is often marginal.
 
-## 8. Key Insights
+## 7. Key Insights
 
 *   **Non-linear Signal:** The superior performance of tree-based models (Random Forest, XGBoost, LightGBM) over linear baselines suggests that there might be non-linear relationships and interactions between features that influence stock returns. This reinforces the idea that simpler linear models might not fully capture market dynamics.
 *   **Importance of Feature Engineering:** Creating relevant features like lagged returns, volatility, and momentum proved beneficial. These handcrafted features provide the models with context about recent market behavior, which is crucial for time-series forecasting.
 *   **Limits of Prediction in Finance:** Despite the efforts in feature engineering and model tuning, the R² values remain low, indicating that predicting the exact magnitude of stock returns is extremely difficult. The focus shifts more towards predicting the *direction* rather than the precise value.
 
-## 9. Limitations
+## 8. Limitations
 
 *   **Overfitting Risk:** Given the noisy nature of financial data and the complexity of the models, there's always a risk of overfitting to historical patterns that may not generalize to future market conditions.
 *   **Transaction Costs Not Included:** This analysis does not account for real-world trading frictions such as commissions, bid-ask spread, and slippage. These costs can significantly erode any theoretical profits from a predictive model.
 *   **Non-Stationarity of Markets:** Financial markets are dynamic and constantly evolving. Models trained on past data might become obsolete as market regimes change, leading to concept drift.
 
-## 10. Future Improvements
+## 9. Future Improvements
 
 *   **Feature Expansion:** Explore additional technical indicators (e.g., RSI, MACD), fundamental data, macroeconomic indicators, sentiment analysis from news, or alternative data sources to potentially uncover stronger signals.
 *   **Advanced Model Tuning:** Employ more sophisticated hyperparameter optimization techniques like Bayesian Optimization or evolutionary algorithms for a more exhaustive search of the optimal model configurations.
@@ -130,19 +130,3 @@ The results underscore a critical aspect of financial market prediction: the sig
 *   **Trading Strategy Simulation (Backtesting):** Integrate the predictive model into a comprehensive backtesting framework that includes realistic transaction costs, position sizing, and risk management to evaluate its true profitability.
 *   **Deep Learning Models:** Investigate the use of recurrent neural networks (RNNs) or transformer models, which are often well-suited for sequence data like financial time series.
 
-## 11. Installation & Usage
-
-To run this notebook and reproduce the analysis, follow these steps:
-
-1.  **Open in Google Colab:** Click the "Open in Colab" badge or upload the `.ipynb` file to your Google Drive and open it with Colaboratory.
-2.  **Run Cells:** Execute each code cell sequentially. The notebook is designed to be run step-by-step.
-
-### Required Libraries
-All necessary libraries can be installed via `pip`. They are typically pre-installed or will be installed as dependencies within a Colab environment.
-
-```bash
-pip install torch torchvision torchaudio numpy pandas yfinance seaborn matplotlib scikit-learn xgboost lightgbm
-```
-
-Note: `torch`, `torchvision`, `torchaudio` are imported but not explicitly used in the final models; they might be remnants of an earlier exploration or placeholder for future deep learning work.
-```
